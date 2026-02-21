@@ -5,14 +5,21 @@
   --orange: #FF6B35;
   --light-blue: #2A5080;
   --bg: #F5F7FA;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body, #root { height: 100%; width: 100%; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: #1a1a2e; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: #1a1a2e; -webkit-font-smoothing: antialiased; overscroll-behavior-y: contain; }
 
-/* Safe area for mobile */
-.pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 80px); }
+/* Safe area for mobile - accounts for bottom nav (64px) + safe area */
+.pb-safe { padding-bottom: calc(80px + var(--safe-bottom)); }
+
+/* Ensure content doesn't hide behind notch */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+}
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 4px; }
@@ -24,3 +31,26 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   100% { transform: scale(1.4); opacity: 0; }
 }
 .animate-pulse-ring { animation: pulse-ring 1.5s ease-out infinite; }
+
+/* Smooth page transitions */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skeleton loader */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* Touch feedback */
+button { touch-action: manipulation; }
+select { touch-action: manipulation; }
+input { touch-action: manipulation; font-size: 16px !important; /* Prevent iOS zoom */ }

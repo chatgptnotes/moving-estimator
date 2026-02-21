@@ -25,9 +25,14 @@ export default function History() {
       <div className="px-5 mt-4 space-y-2 pb-28">
         {estimates.length === 0 && (
           <div className="text-center py-16">
-            <Box size={48} className="mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-400 text-sm">No estimates yet</p>
-            <button onClick={() => nav('/new-move')} className="mt-4 text-[#FF6B35] font-medium text-sm">Create your first estimate →</button>
+            <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+              <Box size={40} className="text-gray-300" />
+            </div>
+            <p className="text-gray-800 font-semibold text-base mb-1">No estimates yet</p>
+            <p className="text-gray-400 text-sm mb-6">Scan your rooms to get an instant moving cost estimate</p>
+            <button onClick={() => nav('/new-move')} className="bg-[#FF6B35] text-white font-semibold py-4 px-8 rounded-2xl text-sm active:scale-95 transition-transform shadow-lg shadow-orange-500/30">
+              Start Your First Estimate →
+            </button>
           </div>
         )}
         {estimates.map((e, i) => (
@@ -47,7 +52,7 @@ export default function History() {
               <p className="text-sm font-bold text-[#1E3A5F]">{Math.round(e.total_volume)} cuft</p>
               <p className="text-[10px] text-gray-400">{e.rooms?.length || 0} rooms</p>
             </div>
-            <button onClick={() => deleteEstimate(e.id)} className="p-2 text-gray-300 hover:text-red-400"><Trash2 size={16} /></button>
+            <button onClick={() => { if (confirm('Delete this estimate?')) deleteEstimate(e.id) }} className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-red-400 active:text-red-500 transition-colors"><Trash2 size={16} /></button>
           </motion.div>
         ))}
       </div>

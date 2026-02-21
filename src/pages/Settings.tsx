@@ -6,9 +6,9 @@ export default function SettingsPage() {
   const update = (partial: Partial<Settings>) => setSettings(s => ({ ...s, ...partial }))
 
   const Select = ({ label, value, options, onChange }: { label: string; value: string; options: { value: string; label: string }[]; onChange: (v: string) => void }) => (
-    <div className="flex items-center justify-between py-3 border-b border-gray-100">
+    <div className="flex items-center justify-between py-3 min-h-[52px] border-b border-gray-100">
       <span className="text-sm text-gray-700">{label}</span>
-      <select value={value} onChange={e => onChange(e.target.value)} className="bg-gray-100 rounded-lg px-3 py-1.5 text-sm text-right border-none outline-none">
+      <select value={value} onChange={e => onChange(e.target.value)} className="bg-gray-100 rounded-lg px-4 py-2.5 text-sm text-right border-none outline-none min-h-[44px]">
         {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>

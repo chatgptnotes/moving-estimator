@@ -128,26 +128,45 @@ export default function Scanner() {
 
   if (!estimate) return <div className="p-6 text-center text-gray-500">Estimate not found</div>
 
-  if (analyzing) return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#1E3A5F] text-white p-6">
-      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}>
-        <Loader2 size={48} />
-      </motion.div>
-      <h2 className="text-xl font-bold mt-6">Analyzing Your Rooms</h2>
-      <p className="text-blue-200 text-sm mt-2 text-center">AI is detecting furniture and estimating volumes...</p>
-      <div className="mt-8 space-y-2 w-full max-w-xs">
-        {rooms.filter(r => r.scanned).map((r, i) => (
-          <motion.div key={r.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.3 }}
-            className="flex items-center gap-3 bg-white/10 rounded-xl p-3">
-            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: i * 0.3 + 0.5 }}>
-              <Check size={16} className="text-green-400" />
+  if (analyzing) {
+    const scannedRoomsList = rooms.filter(r => r.scanned)
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#0F2847] to-[#1E3A5F] text-white p-6">
+        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}>
+          <Loader2 size={48} />
+        </motion.div>
+        <h2 className="text-xl font-bold mt-6">Analyzing Your Rooms</h2>
+        <p className="text-blue-200 text-sm mt-2 text-center">AI is detecting furniture and estimating volumes...</p>
+        <p className="text-blue-300/60 text-xs mt-1">Usually takes 5-15 seconds</p>
+        
+        {/* Progress bar */}
+        <div className="w-full max-w-xs mt-6">
+          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-gradient-to-r from-[#FF6B35] to-[#FF8F35] rounded-full"
+              initial={{ width: '5%' }}
+              animate={{ width: '90%' }}
+              transition={{ duration: 3, ease: 'easeOut' }}
+            />
+          </div>
+        </div>
+
+        <div className="mt-6 space-y-2 w-full max-w-xs">
+          {scannedRoomsList.map((r, i) => (
+            <motion.div key={r.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.3 }}
+              className="flex items-center gap-3 bg-white/10 rounded-xl p-3">
+              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: i * 0.3 + 0.5 }}>
+                <Check size={16} className="text-green-400" />
+              </motion.div>
+              <span className="text-sm">{r.name}</span>
+              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.3 + 0.8 }}
+                className="ml-auto text-[10px] text-green-400">Detected</motion.span>
             </motion.div>
-            <span className="text-sm">{r.name}</span>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">

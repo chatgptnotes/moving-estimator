@@ -86,7 +86,7 @@ export default function Estimate() {
             {estimate.rooms.map(room => (
               <motion.div key={room.id} layout className="bg-white rounded-xl shadow-sm overflow-hidden">
                 <button onClick={() => setExpandedRoom(expandedRoom === room.id ? null : room.id)}
-                  className="w-full flex items-center justify-between p-4">
+                  className="w-full flex items-center justify-between p-4 min-h-[56px] active:bg-gray-50 transition-colors">
                   <div className="flex items-center gap-3">
                     <span className="text-lg">{room.type === 'living_room' ? '🛋️' : room.type === 'master_bedroom' || room.type.startsWith('bedroom') ? '🛏️' : room.type === 'kitchen' ? '🍳' : room.type === 'bathroom' ? '🚿' : room.type === 'office' ? '💼' : '📦'}</span>
                     <div className="text-left">
@@ -192,15 +192,16 @@ export default function Estimate() {
         </div>
 
         {/* Share */}
+        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Share Estimate</h2>
         <div className="flex gap-2">
-          <button onClick={shareWhatsApp} className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-3.5 rounded-xl font-medium text-sm">
-            <MessageCircle size={16} /> WhatsApp
+          <button onClick={shareWhatsApp} className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-4 rounded-xl font-medium text-sm min-h-[52px] active:scale-95 transition-transform shadow-sm">
+            <MessageCircle size={18} /> WhatsApp
           </button>
-          <button className="flex-1 flex items-center justify-center gap-2 bg-[#1E3A5F] text-white py-3.5 rounded-xl font-medium text-sm">
-            <Mail size={16} /> Email
+          <button className="flex-1 flex items-center justify-center gap-2 bg-[#1E3A5F] text-white py-4 rounded-xl font-medium text-sm min-h-[52px] active:scale-95 transition-transform shadow-sm">
+            <Mail size={18} /> Email
           </button>
-          <button className="flex items-center justify-center gap-2 bg-gray-200 text-gray-700 py-3.5 px-5 rounded-xl font-medium text-sm">
-            <Download size={16} />
+          <button className="flex items-center justify-center gap-2 bg-gray-200 text-gray-700 py-4 px-5 rounded-xl font-medium text-sm min-h-[52px] active:scale-95 transition-transform">
+            <Download size={18} />
           </button>
         </div>
       </div>

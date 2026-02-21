@@ -78,8 +78,26 @@ export default function NewMove() {
   return (
     <div className="min-h-screen">
       <div className="bg-gradient-to-br from-[#1E3A5F] to-[#2A5080] text-white px-6 pt-12 pb-6 rounded-b-3xl">
+        <button onClick={() => nav(-1)} className="text-blue-200 text-sm mb-3 min-h-[48px] flex items-center active:opacity-70 transition-opacity">&larr; Back</button>
         <h1 className="text-xl font-bold">New Move</h1>
-        <p className="text-blue-200 text-sm">Set up your move details</p>
+        <p className="text-blue-200 text-sm mb-4">Set up your move details</p>
+        {/* Progress steps */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded-full bg-[#FF6B35] flex items-center justify-center text-[10px] font-bold">1</div>
+            <span className="text-xs text-white font-medium">Details</span>
+          </div>
+          <div className="flex-1 h-0.5 bg-white/20 rounded" />
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">2</div>
+            <span className="text-xs text-blue-300">Scan</span>
+          </div>
+          <div className="flex-1 h-0.5 bg-white/20 rounded" />
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">3</div>
+            <span className="text-xs text-blue-300">Results</span>
+          </div>
+        </div>
       </div>
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="px-5 mt-6 space-y-6 pb-28">
@@ -134,7 +152,7 @@ export default function NewMove() {
             <div className="flex gap-2">
               {(['local', 'interstate', 'international'] as const).map(t => (
                 <button key={t} onClick={() => setForm(f => ({ ...f, move_type: t }))}
-                  className={`flex-1 py-2.5 rounded-xl text-xs font-medium capitalize transition-all ${form.move_type === t ? 'bg-[#1E3A5F] text-white shadow-md' : 'bg-gray-100 text-gray-600'}`}>
+                  className={`flex-1 py-3 rounded-xl text-xs font-medium capitalize transition-all min-h-[48px] active:scale-95 ${form.move_type === t ? 'bg-[#1E3A5F] text-white shadow-md' : 'bg-gray-100 text-gray-600'}`}>
                   {t}
                 </button>
               ))}
@@ -148,7 +166,7 @@ export default function NewMove() {
           <div className="grid grid-cols-3 gap-2">
             {roomTypes.map(r => (
               <button key={r.type} onClick={() => toggleRoom(r.type)}
-                className={`flex flex-col items-center gap-1 p-3 rounded-xl text-center transition-all ${selectedRooms.includes(r.type) ? 'bg-[#FF6B35]/10 border-2 border-[#FF6B35]' : 'bg-gray-50 border-2 border-transparent'}`}>
+                className={`flex flex-col items-center gap-1.5 p-3 rounded-xl text-center transition-all min-h-[72px] active:scale-95 ${selectedRooms.includes(r.type) ? 'bg-[#FF6B35]/10 border-2 border-[#FF6B35] shadow-sm' : 'bg-gray-50 border-2 border-transparent'}`}>
                 <span className="text-xl">{r.icon}</span>
                 <span className="text-[10px] font-medium text-gray-700 leading-tight">{r.label}</span>
               </button>
