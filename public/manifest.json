@@ -1,0 +1,11 @@
+{
+  "name": "Moving Estimator",
+  "short_name": "MoveEst",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1E3A5F",
+  "theme_color": "#1E3A5F",
+  "icons": [
+    { "src": "/vite.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
