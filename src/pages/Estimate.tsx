@@ -44,7 +44,7 @@ export default function Estimate() {
     <div className="min-h-screen pb-28">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#1E3A5F] to-[#2A5080] text-white px-6 pt-12 pb-8 rounded-b-3xl">
-        <button onClick={() => nav('/')} className="text-blue-200 text-sm mb-4">&larr; Home</button>
+        <button onClick={() => nav('/')} className="text-blue-200 text-sm mb-4 min-h-[48px] flex items-center active:opacity-70 transition-opacity">&larr; Home</button>
         <h1 className="text-xl font-bold">Your Estimate</h1>
         <p className="text-blue-200 text-sm">{estimate.from_city || 'Origin'} → {estimate.to_city || 'Destination'}</p>
       </div>
@@ -116,8 +116,8 @@ export default function Estimate() {
                                 <span className="text-[9px] text-gray-400">{Math.round(item.confidence * 100)}%</span>
                               </div>
                             </div>
-                            <button onClick={() => removeItem(room.id, item.id)} className="p-1 text-gray-300 hover:text-red-400">
-                              <Trash2 size={12} />
+                            <button onClick={() => removeItem(room.id, item.id)} className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-300 hover:text-red-400 active:text-red-500 transition-colors">
+                              <Trash2 size={14} />
                             </button>
                           </div>
                         ))}

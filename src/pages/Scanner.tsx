@@ -160,7 +160,7 @@ export default function Scanner() {
           {/* Top bar */}
           <div className="p-4 bg-gradient-to-b from-black/60 to-transparent pointer-events-auto">
             <div className="flex items-center justify-between">
-              <button onClick={() => nav(-1)} className="text-white text-sm">&larr; Back</button>
+              <button onClick={() => nav(-1)} className="text-white text-sm min-h-[48px] min-w-[48px] flex items-center active:opacity-70 transition-opacity">&larr; Back</button>
               <span className="text-sm font-medium">{currentRoom?.name}</span>
               <span className="text-xs bg-white/20 px-2 py-1 rounded-full">{scannedCount}/{rooms.length}</span>
             </div>
@@ -169,10 +169,25 @@ export default function Scanner() {
           {/* Guide text */}
           {recording && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex items-center justify-center">
-              <div className="bg-black/40 backdrop-blur-sm rounded-2xl px-6 py-3 text-center">
+              <div className="bg-black/40 backdrop-blur-sm rounded-2xl px-6 py-4 text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+                  <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">Recording</span>
+                </div>
                 <p className="text-sm">Slowly pan from floor to ceiling</p>
                 <p className="text-xs text-gray-300 mt-1">Capture all furniture and items</p>
-                <p className="text-2xl font-mono font-bold mt-2 text-[#FF6B35]">{formatTime(timer)}</p>
+                <p className="text-3xl font-mono font-bold mt-2 text-[#FF6B35]">{formatTime(timer)}</p>
+                {timer >= 15 && <p className="text-[10px] text-green-400 mt-1">✓ Minimum captured — tap stop when ready</p>}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Idle guide */}
+          {!recording && !previewUrl && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex items-end justify-center pb-4">
+              <div className="bg-black/40 backdrop-blur-sm rounded-2xl px-6 py-3 text-center">
+                <p className="text-sm font-medium">📹 Tap the red button to start recording</p>
+                <p className="text-xs text-gray-300 mt-1">Record 15-60 seconds per room</p>
               </div>
             </motion.div>
           )}
@@ -187,9 +202,9 @@ export default function Scanner() {
                 <p className="text-lg font-semibold">{currentRoom?.name} Recorded!</p>
                 <p className="text-sm text-gray-400 mt-1">{formatTime(timer)} captured</p>
                 <div className="flex gap-3 mt-6">
-                  <button onClick={reRecord} className="flex items-center gap-1 bg-white/10 px-5 py-3 rounded-xl text-sm"><RotateCcw size={14} /> Re-record</button>
+                  <button onClick={reRecord} className="flex items-center gap-2 bg-white/10 px-6 py-4 rounded-xl text-sm min-h-[48px] active:scale-95 transition-transform"><RotateCcw size={16} /> Re-record</button>
                   {activeRoom < rooms.length - 1 && (
-                    <button onClick={nextRoom} className="flex items-center gap-1 bg-[#FF6B35] px-5 py-3 rounded-xl text-sm font-medium">Next Room <ChevronRight size={14} /></button>
+                    <button onClick={nextRoom} className="flex items-center gap-2 bg-[#FF6B35] px-6 py-4 rounded-xl text-sm font-semibold min-h-[48px] active:scale-95 transition-transform">Next Room <ChevronRight size={16} /></button>
                   )}
                 </div>
               </div>
@@ -204,7 +219,7 @@ export default function Scanner() {
         <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4">
           {rooms.map((r, i) => (
             <button key={r.id} onClick={() => { setActiveRoom(i); setPreviewUrl(null) }}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${i === activeRoom ? 'bg-[#FF6B35] text-white' : r.scanned ? 'bg-green-900/30 text-green-400 border border-green-800' : 'bg-white/5 text-gray-400'}`}>
+              className={`flex items-center gap-1.5 px-4 py-3 rounded-xl text-xs font-medium whitespace-nowrap transition-all min-h-[48px] active:scale-95 ${i === activeRoom ? 'bg-[#FF6B35] text-white' : r.scanned ? 'bg-green-900/30 text-green-400 border border-green-800' : 'bg-white/5 text-gray-400'}`}>
               {r.scanned && <Check size={12} />}
               {r.name}
             </button>
