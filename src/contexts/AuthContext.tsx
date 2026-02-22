@@ -86,7 +86,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signInWithGoogle = async () => {
-    return supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } })
+    const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } })
+    if (error) {
+      if (error.message?.includes('not enabled') || error.message?.includes('unsupported')) {
+        throw new Error('Google login is not configured yet. Please use email/password.')
+      }
+      throw error
+    }
+    return { data, error }
   }
 
   const signInWithOtp = async (phone: string) => {
